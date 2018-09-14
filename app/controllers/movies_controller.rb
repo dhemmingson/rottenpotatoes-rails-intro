@@ -11,7 +11,9 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all.order(params[:sort_by])
+    @all_ratings = Movie.ratings
+    @selected = params[:ratings] ? params[:ratings].keys : @all_ratings
+    @movies = Movie.where({rating: @selected}).order(params[:sort_by])
     @hilite = { params[:sort_by] => 'hilite' }
   end
 
